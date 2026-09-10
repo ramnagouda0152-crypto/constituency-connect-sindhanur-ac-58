@@ -1,0 +1,12 @@
+{
+  "name": "Constituency Connect – Sindhanur AC-58",
+  "description": "Centralized constituency management and civic issue tracking platform for Sindhanur AC-58 with role-based data isolation.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

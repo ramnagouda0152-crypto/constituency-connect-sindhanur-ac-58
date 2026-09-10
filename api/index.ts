@@ -1,0 +1,21 @@
+import app from '../src/server/app.ts';
+
+export default function handler(req: any, res: any) {
+  try {
+    const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
+    if (matchedPath && typeof matchedPath === 'string' && matchedPath.startsWith('/api')) {
+      req.url = matchedPath;
+    } else if (req.url && !req.url.startsWith('/api')) {
+      req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+    }
+    return app(req, res);
+  } catch (err: any) {
+    console.error('[Vercel Serverless Handler Error]:', err);
+    if (!res.headersSent) {
+      res.status(500).json({
+        error: 'Internal Server Error',
+        details: err?.message || 'Server error occurred'
+      });
+    }
+  }
+}
