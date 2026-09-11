@@ -1,6 +1,26 @@
 import app from '../src/server/app.ts';
 
 export default function handler(req: any, res: any) {
+  if (req.url === '/api/debug-db') {
+    const url = process.env.DATABASE_URL || '';
+    try {
+      const u = new URL(url);
+      return res.status(200).json({
+        exists: !!url,
+        protocol: u.protocol,
+        hostname: u.hostname,
+        database: u.pathname,
+        hasPassword: !!u.password,
+        passwordLength: u.password.length
+      });
+    } catch {
+      return res.status(200).json({
+        exists: !!url,
+        invalidFormat: true
+      });
+    }
+  }
+
   try {
     const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
     if (matchedPath && typeof matchedPath === 'string' && matchedPath.startsWith('/api')) {
