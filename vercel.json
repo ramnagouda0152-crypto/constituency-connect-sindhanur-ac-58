@@ -4,10 +4,10 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.ts": {
-      "includeFiles": "src/server/**"
+      "includeFiles": "src/**"
     },
     "api/[...all].ts": {
-      "includeFiles": "src/server/**"
+      "includeFiles": "src/**"
     }
   },
   "rewrites": [
