@@ -57,7 +57,7 @@ export const IssueTracker: React.FC<IssueTrackerProps> = ({
   const [newCat, setNewCat] = useState('Water Supply');
   const [newPriority, setNewPriority] = useState<Issue['priority']>('MEDIUM');
   const [newVillageId, setNewVillageId] = useState(currentUser.village_id || 'V_GOR01');
-  const [newPhotoUrl, setNewPhotoUrl] = useState('');
+  const [newPhoto, setNewPhoto] = useState('');
   const [isSubmittingNew, setIsSubmittingNew] = useState(false);
 
   const isVillageHead = currentUser.role === 'VILLAGE_HEAD';
@@ -82,7 +82,23 @@ export const IssueTracker: React.FC<IssueTrackerProps> = ({
       setLoading(false);
     }
   };
+const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
 
+  if (!file.type.startsWith('image/')) {
+    alert('Please select an image file.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    setNewPhoto(reader.result as string);
+  };
+
+  reader.readAsDataURL(file);
+};
   const handleCreateIssue = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle || !newDesc) return;
@@ -95,9 +111,7 @@ export const IssueTracker: React.FC<IssueTrackerProps> = ({
         category: newCat as any,
         priority: newPriority,
         village_id: targetVillage,
-        photos: newPhotoUrl ? [newPhotoUrl] : [
-          'https://images.unsplash.com/photo-1541888946425-d0fbb18615f8?w=800&auto=format&fit=crop&q=60'
-        ]
+       photos: newPhoto ? [newPhoto] : []
       });
 
       setShowNewModal(false);
@@ -574,14 +588,36 @@ export const IssueTracker: React.FC<IssueTrackerProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Photo URL (Optional)</label>
-                <input
-                  type="url"
-                  value={newPhotoUrl}
-                  onChange={e => setNewPhotoUrl(e.target.value)}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500"
-                />
+                <div>
+  <label className="block font-semibold text-slate-700 mb-1">
+    Photo (Optional)
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    capture="environment"
+    onChange={handlePhotoChange}
+    className="w-full px-3 py-2 border border-slate-200 rounded-lg bg-white"
+  />
+
+  {newPhoto && (
+    <div className="mt-2">
+      <img
+        src={newPhoto}
+        alt="Selected issue"
+        className="w-full max-h-48 object-cover rounded-lg border border-slate-200"
+      />
+      <button
+        type="button"
+        onClick={() => setNewPhoto('')}
+        className="mt-2 text-xs text-red-600 hover:text-red-700"
+      >
+        Remove Photo
+      </button>
+    </div>
+  )}
+</div>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">

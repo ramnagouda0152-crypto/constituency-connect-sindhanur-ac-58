@@ -1,33 +1,38 @@
 import app from '../src/server/app.ts';
+import { getPostgresPool } from '../src/server/db/postgresPool.ts';
+import { migrateDataToPostgres } from '../src/server/db/migrate.ts';
 
-export default function handler(req: any, res: any) {
-  const path = req.url || '';
+let migrationPromise: Promise<any> | null = null;
 
-  if (path.includes('/debug-db')) {
-    const url = process.env.DATABASE_URL || '';
+async function ensureDatabaseInitialized() {
+  const pool = getPostgresPool();
 
-    try {
-      const u = new URL(url);
+  if (!pool) return;
 
-      return res.status(200).json({
-        exists: true,
-        protocol: u.protocol,
-        hostname: u.hostname,
-        database: u.pathname,
-        hasUsername: !!u.username,
-        hasPassword: !!u.password,
-        passwordLength: u.password.length
-      });
-    } catch (err: any) {
-      return res.status(200).json({
-        exists: !!url,
-        invalidFormat: true,
-        valueLength: url.length
-      });
-    }
+  if (!migrationPromise) {
+    migrationPromise = (async () => {
+      const result = await pool.query('SELECT COUNT(*)::int AS count FROM villages');
+
+      if (result.rows[0].count < 100) {
+        console.log('[Vercel] Database has fewer than 100 villages. Running migration...');
+        return migrateDataToPostgres();
+      }
+
+      return { migrated: false, message: `Database already contains ${result.rows[0].count} villages.` };
+    })().catch((err) => {
+      migrationPromise = null;
+      console.error('[Vercel] Database initialization failed:', err);
+      throw err;
+    });
   }
 
+  return migrationPromise;
+}
+
+export default async function handler(req: any, res: any) {
   try {
+    await ensureDatabaseInitialized();
+
     const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
 
     if (matchedPath && typeof matchedPath === 'string' && matchedPath.startsWith('/api')) {
@@ -43,7 +48,7 @@ export default function handler(req: any, res: any) {
     if (!res.headersSent) {
       res.status(500).json({
         error: 'Internal Server Error',
-        details: err?.message || 'Server error occurred'
+        details: err?.message || 'Server initialization error'
       });
     }
   }
