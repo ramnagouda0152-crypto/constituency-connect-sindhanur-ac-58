@@ -1,4 +1,4 @@
-﻿import {
+import {
   User,
   DashboardStats,
   Village,
@@ -220,8 +220,8 @@ class ApiClient {
     search?: string;
   }): Promise<User[]> {
     const query = new URLSearchParams();
-    if (filters?.status) query.append('status', filters.status);
-    if (filters?.role) query.append('role', filters.role);
+    if (filters?.status && filters.status !== 'all') query.append('status', filters.status);
+    if (filters?.role && filters.role !== 'all') query.append('role', filters.role);
     if (filters?.village_id) query.append('village_id', filters.village_id);
     if (filters?.gp_id) query.append('gp_id', filters.gp_id);
     if (filters?.search) query.append('search', filters.search);
@@ -638,5 +638,6 @@ class ApiClient {
 }
 
 export const api = new ApiClient();
+
 
 
