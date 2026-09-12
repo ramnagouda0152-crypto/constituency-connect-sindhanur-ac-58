@@ -108,6 +108,7 @@ export class PostgresRepository {
     mobile: string;
     email?: string;
     password?: string;
+    profile_photo?: string;
   }): Promise<{ success: boolean; user?: ServerUser; error?: string }> {
     return withTransaction(async (client) => {
       const existingAdmin = await client.query("SELECT * FROM users WHERE role = 'SUPER_ADMIN' LIMIT 1");
@@ -184,13 +185,13 @@ export class PostgresRepository {
         `INSERT INTO users (
            user_id, name, name_kannada, mobile, email, voter_id, role, status,
            village_id, gp_id, taluk_id, constituency_id, password_hash, password_salt,
-           dob, gender, address, created_at, updated_at
-         ) VALUES ($1, $2, $3, $4, $5, $6, 'MEMBER', 'PENDING', $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $16)
+           dob, gender, address, profile_photo, created_at, updated_at
+         ) VALUES ($1, $2, $3, $4, $5, $6, 'MEMBER', 'PENDING', $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
          RETURNING *`,
         [
           userId, params.name, params.name_kannada || null, params.mobile, params.email || null,
           params.voter_id.toUpperCase().trim(), village.village_id, village.gp_id, village.taluk_id,
-          village.constituency_id, hash, salt, params.dob || null, params.gender || null, params.address || null, now
+          village.constituency_id, hash, salt, params.dob || null, params.gender || null, params.address || null, params.profile_photo || null, now
         ]
       );
 
@@ -2610,3 +2611,5 @@ export class PersistentRepository {
 }
 
 export const repository = new PersistentRepository();
+
+

@@ -17,6 +17,10 @@ export async function migrateDataToPostgres(): Promise<{ migrated: boolean; mess
   // Ensure tables and indexes exist
   await initializeSchema();
 
+  if (pool) {
+    await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_photo TEXT');
+  }
+
   // Check if villages table already has records
   const checkRes = await pool.query('SELECT COUNT(*) as count FROM villages');
   const count = parseInt(checkRes.rows[0].count, 10);
@@ -257,3 +261,4 @@ export async function migrateDataToPostgres(): Promise<{ migrated: boolean; mess
     client.release();
   }
 }
+

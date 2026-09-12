@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS users (
   dob VARCHAR(50),
   gender VARCHAR(20),
   address TEXT,
+  profile_photo TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   CONSTRAINT check_village_head_assignment CHECK (role != 'VILLAGE_HEAD' OR (village_id IS NOT NULL))

@@ -76,6 +76,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [regVillageId, setRegVillageId] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regConfirmPassword, setRegConfirmPassword] = useState('');
+  const [regProfilePhoto, setRegProfilePhoto] = useState('');
 
   useEffect(() => {
     loadPublicDirectories();
@@ -182,6 +183,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         address: regAddress.trim() || undefined,
         village_id: regVillageId,
         password: regPassword,
+        profile_photo: regProfilePhoto || undefined,
         confirm_password: regConfirmPassword
       });
 
@@ -596,7 +598,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
           {/* TAB 2: PUBLIC VOTER REGISTRATION */}
           {activeTab === 'register' && (
-            <form onSubmit={handleRegister} className="space-y-3.5 max-h-[60vh] overflow-y-auto pr-1">
+            <form onSubmit={handleRegister} className="space-y-3.5 max-h-[60vh] overflow-y-auto pr-1">`r`n              <div>`r`n                <label className="block text-sm font-medium text-slate-700 mb-1">Profile Photo</label>`r`n                <input type="file" accept="image/*" capture="user" onChange={(e) => { const file = e.target.files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = () => setRegProfilePhoto(String(reader.result || "")); reader.readAsDataURL(file); }} className="block w-full text-sm text-slate-600" />`r`n                {regProfilePhoto && <img src={regProfilePhoto} alt="Profile preview" className="mt-2 h-20 w-20 rounded-full object-cover border" />}`r`n              </div>
               <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-900 leading-relaxed">
                 <p className="font-bold flex items-center gap-1.5 mb-1">
                   <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
@@ -931,3 +933,4 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     </div>
   );
 };
+

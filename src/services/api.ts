@@ -111,6 +111,7 @@ class ApiClient {
     otp: string;
     new_password: string;
     confirm_password: string;
+    profile_photo?: string;
   }): Promise<{ success: boolean; message: string }> {
     return this.request('/api/auth/reset-password', {
       method: 'POST',
@@ -173,6 +174,7 @@ class ApiClient {
     village_id: string;
     password: string;
     confirm_password: string;
+    profile_photo?: string;
   }): Promise<{ success: boolean; message: string; user: User }> {
     return this.request('/api/auth/register', {
       method: 'POST',

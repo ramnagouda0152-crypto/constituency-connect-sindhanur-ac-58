@@ -1813,3 +1813,6 @@ class ConstituencyDatabase {
 }
 
 export const db = new ConstituencyDatabase();
+
+
+
