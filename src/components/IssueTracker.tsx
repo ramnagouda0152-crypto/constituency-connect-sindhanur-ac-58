@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import {
   AlertCircle,
   Plus,
@@ -156,6 +156,24 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     }
   };
 
+  const handleDeleteIssue = async () => {
+    if (!selectedIssue) return;
+
+    const confirmed = window.confirm(
+      `Permanently delete issue "${selectedIssue.title}"? This action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await api.deleteIssue(selectedIssue.issue_id);
+      setIssues(prev => prev.filter(i => i.issue_id !== selectedIssue.issue_id));
+      setSelectedIssue(null);
+      alert('Issue permanently deleted.');
+    } catch (err: any) {
+      alert(`Failed to delete issue: ${err.message}`);
+    }
+  };
   const handleUpdateStatus = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedIssue || !statusRemarks.trim()) return;
@@ -474,6 +492,21 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   ))}
                 </div>
               </div>
+
+              {currentUser.role === 'SUPER_ADMIN' && (
+                <div className="pt-3 mt-3 border-t border-red-100">
+                  <button
+                    type="button"
+                    onClick={handleDeleteIssue}
+                    className="w-full px-3 py-2 rounded-lg text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors"
+                  >
+                    Permanently Delete Issue
+                  </button>
+                  <p className="text-[10px] text-red-500 mt-1.5 text-center">
+                    This action cannot be undone.
+                  </p>
+                </div>
+              )}
             </>
           ) : (
             <div className="py-12 text-center text-xs text-slate-400">
@@ -673,6 +706,8 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
+
+
 
 
 

@@ -1,4 +1,4 @@
-import {
+﻿import {
   User,
   DashboardStats,
   Village,
@@ -396,6 +396,12 @@ class ApiClient {
     });
   }
 
+
+  public async deleteIssue(issueId: string): Promise<{ success: boolean; message?: string }> {
+    return this.request(`/api/admin/issues/${encodeURIComponent(issueId)}`, {
+      method: 'DELETE'
+    });
+  }
   // Projects
   public async getProjects(): Promise<DevelopmentProject[]> {
     return this.request('/api/projects');
@@ -632,3 +638,5 @@ class ApiClient {
 }
 
 export const api = new ApiClient();
+
+

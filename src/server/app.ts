@@ -1141,6 +1141,24 @@ app.get('/api/public/villages', async (_req, res) => {
     res.json(updated);
   });
 
+  // Admin: permanently delete a civic issue
+  app.delete('/api/admin/issues/:issueId', authenticateUser, requireAdmin, async (req: AuthenticatedRequest, res) => {
+    const { issueId } = req.params;
+    const issue = await repository.getIssueById(issueId);
+    if (!issue) {
+      res.status(404).json({ error: 'Issue not found.' });
+      return;
+    }
+
+    const deleted = await repository.deleteIssue(issueId, req.user!);
+    if (!deleted) {
+      res.status(404).json({ error: 'Issue not found or already deleted.' });
+      return;
+    }
+
+    res.json({ success: true, message: 'Issue permanently deleted.' });
+  });
+
   // -------------------------------------------------------------
   // DEVELOPMENT PROJECTS
   // -------------------------------------------------------------
