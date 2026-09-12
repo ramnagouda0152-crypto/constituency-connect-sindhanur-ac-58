@@ -22,6 +22,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
   // Form State
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
+  const [voterId, setVoterId] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState<'VILLAGE_HEAD' | 'FIELD_WORKER'>('FIELD_WORKER');
   const [villageId, setVillageId] = useState(currentUser.village_id || 'V_GOR01');
@@ -47,13 +48,14 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
 
   const handleAddMember = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !mobile) return;
+    if (!name || !mobile || !voterId) return;
     setIsSubmitting(true);
     try {
       const targetVillage = isVillageHead ? (currentUser.village_id || 'V_GOR01') : villageId;
       await api.createTeamMember({
         name,
         mobile,
+        voter_id: voterId.trim().toUpperCase(),
         email: email || `${name.toLowerCase().replace(/\s+/g, '')}@sindhanur.gov.in`,
         role,
         village_id: targetVillage,
@@ -62,6 +64,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
       setShowAddModal(false);
       setName('');
       setMobile('');
+      setVoterId('');
       setEmail('');
       loadTeam();
     } catch (err: any) {
@@ -176,6 +179,18 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
                   onChange={e => setMobile(e.target.value)}
                   placeholder="+91 98765 43210"
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Voter ID Number</label>
+                <input
+                  type="text"
+                  required
+                  value={voterId}
+                  onChange={e => setVoterId(e.target.value.toUpperCase())}
+                  placeholder="e.g. ABC1234567"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 font-mono"
                 />
               </div>
 

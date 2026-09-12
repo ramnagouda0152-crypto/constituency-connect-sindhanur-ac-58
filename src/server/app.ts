@@ -923,7 +923,7 @@ app.get('/api/public/villages', async (_req, res) => {
 
   app.post('/api/team', authenticateUser, requireAdmin, async (req: AuthenticatedRequest, res) => {
     const user = req.user!;
-    const { name, name_kannada, mobile, email, role, village_id } = req.body;
+    const { name, name_kannada, mobile, email, voter_id, role, village_id } = req.body;
 
     // Strict village isolation: target village must match user's village
     if (village_id && !enforceVillageAccess(req, res, village_id)) return;
@@ -935,8 +935,8 @@ app.get('/api/public/villages', async (_req, res) => {
     }
     if (!enforceVillageAccess(req, res, targetVillageId)) return;
 
-    if (!name || !mobile || !targetVillageId) {
-      res.status(400).json({ error: 'Name, mobile, and village assignment are required.' });
+    if (!name || !mobile || !voter_id || !targetVillageId) {
+      res.status(400).json({ error: 'Name, mobile, Voter ID, and village assignment are required.' });
       return;
     }
 
@@ -951,6 +951,7 @@ app.get('/api/public/villages', async (_req, res) => {
       name,
       name_kannada: name_kannada || name,
       mobile,
+      voter_id: voter_id.trim().toUpperCase(),
       email: email || `${name.toLowerCase().replace(/\s+/g, '.')}@sindhanur-ac58.gov.in`,
       role: role || 'MEMBER',
       village_id: targetVillageId,
