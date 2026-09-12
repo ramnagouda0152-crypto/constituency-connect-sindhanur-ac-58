@@ -43,6 +43,19 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [panOffset, setPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [officialBoundary, setOfficialBoundary] = useState<number[][][]>([]);
+
+  useEffect(() => {
+    fetch('/data/maps/sindhanur-ac58.geojson')
+      .then(res => res.json())
+      .then(data => {
+        const geometry = data?.features?.[0]?.geometry;
+        if (geometry?.type === 'Polygon') {
+          setOfficialBoundary(geometry.coordinates);
+        }
+      })
+      .catch(err => console.error('Failed to load official AC-58 boundary:', err));
+  }, []);
 
   const isDraggingRef = useRef(false);
   const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -129,7 +142,7 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
     projectCoordinates(15.85, 76.70)  // North-West: Somalapura
   ];
 
-  const boundaryPathD = `M ${boundaryPoints.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L ')} Z`;
+  const officialBoundaryPathD = officialBoundary.length > 0 ? officialBoundary.map(ring => `M ${ring.map(([lng, lat]) => { const p = projectCoordinates(lat, lng); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`; }).join(' L ')} Z`).join(' ') : '';
 
   // Issues and stats for selected village
   const selectedVillageIssues = selectedVillage
@@ -311,7 +324,7 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
 
             {/* Official AC-58 Constituency Boundary Polygon */}
             <path
-              d={boundaryPathD}
+              d={officialBoundaryPathD}
               fill="#064e3b"
               fillOpacity="0.16"
               stroke="#10b981"
@@ -512,3 +525,8 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
     </div>
   );
 };
+
+
+
+
+
