@@ -51,7 +51,7 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
       .then(data => {
         const geometry = data?.features?.[0]?.geometry;
         if (geometry?.type === 'Polygon') {
-          setOfficialBoundary(geometry.coordinates);
+          const R = 6378137; const converted = geometry.coordinates.map((ring: number[][]) => ring.map(([x, y]: number[]) => { const lng = (x / R) * (180 / Math.PI); const lat = (2 * Math.atan(Math.exp(y / R)) - Math.PI / 2) * (180 / Math.PI); return [lng, lat]; })); setOfficialBoundary(converted);
         }
       })
       .catch(err => console.error('Failed to load official AC-58 boundary:', err));
@@ -525,6 +525,8 @@ export const ConstituencyMap: React.FC<ConstituencyMapProps> = ({
     </div>
   );
 };
+
+
 
 
 
