@@ -793,6 +793,16 @@ class ConstituencyDatabase {
     const newVillageId = updates.village_id !== undefined ? updates.village_id : user.village_id;
     const newStatus = updates.status ?? user.status;
 
+    // Never allow the last active Super Admin to lose admin access.
+    if (user.role === 'SUPER_ADMIN' && (newRole !== 'SUPER_ADMIN' || newStatus !== 'ACTIVE')) {
+      const activeSuperAdmins = this.data.users.filter(
+        u => u.role === 'SUPER_ADMIN' && u.status === 'ACTIVE'
+      );
+      if (activeSuperAdmins.length <= 1) {
+        return { success: false, error: 'Cannot demote or deactivate the last active Super Admin.' };
+      }
+    }
+
     if (newRole === 'VILLAGE_HEAD' && newStatus === 'ACTIVE') {
       if (!newVillageId) {
         return { success: false, error: 'A Village Head must be assigned to exactly one village.' };

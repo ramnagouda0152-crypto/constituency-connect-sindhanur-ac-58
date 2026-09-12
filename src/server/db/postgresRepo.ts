@@ -486,6 +486,14 @@ export class PostgresRepository {
       const newVillageId = updates.village_id !== undefined ? updates.village_id : current.village_id;
       const newStatus = updates.status ?? current.status;
 
+      // Never allow the last active Super Admin to lose admin access.
+      if (current.role === 'SUPER_ADMIN' && (newRole !== 'SUPER_ADMIN' || newStatus !== 'ACTIVE')) {
+        const adminCountRes = await client.query(`SELECT COUNT(*)::int AS count FROM users WHERE role = 'SUPER_ADMIN' AND status = 'ACTIVE'`);
+        if (adminCountRes.rows[0].count <= 1) {
+          return { success: false, error: 'Cannot demote or deactivate the last active Super Admin.' };
+        }
+      }
+
       // If becoming an ACTIVE Village Head, enforce single active village head rule
       if (newRole === 'VILLAGE_HEAD' && newStatus === 'ACTIVE') {
         if (!newVillageId) {
