@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AlertCircle,
   Plus,
@@ -99,49 +99,18 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
   reader.readAsDataURL(file);
 };
-  const getCurrentGPS = (): Promise<{ latitude: number; longitude: number }> =>
-    new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error('GPS/location is not supported on this device.'));
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          });
-        },
-        () => {
-          reject(new Error('Please allow location access to attach GPS to this issue.'));
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 15000,
-          maximumAge: 0
-        }
-      );
-    });
-
   const handleCreateIssue = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle || !newDesc) return;
     setIsSubmittingNew(true);
     try {
       const targetVillage = isVillageHead ? (currentUser.village_id || 'V_GOR01') : newVillageId;
-      const gps = await getCurrentGPS();
-
       await api.createIssue({
         title: newTitle,
         description: newDesc,
         category: newCat as any,
         priority: newPriority,
         village_id: targetVillage,
-        latitude: gps.latitude,
-        longitude: gps.longitude,
-        location: `${gps.latitude.toFixed(6)}, ${gps.longitude.toFixed(6)}`,
-        photos: newPhoto ? [newPhoto] : []
       });
 
       setShowNewModal(false);
@@ -706,6 +675,10 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
+
+
+
+
 
 
 
