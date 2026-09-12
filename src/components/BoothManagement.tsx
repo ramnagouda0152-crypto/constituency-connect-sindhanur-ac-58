@@ -122,7 +122,7 @@ export const BoothManagement: React.FC<BoothManagementProps> = ({
                 <tr key={b.booth_id} className="hover:bg-slate-50 transition-colors">
                   <td className="py-3 px-4 font-mono font-bold text-slate-900">#{b.booth_number}</td>
                   <td className="py-3 px-4 font-semibold text-slate-800">{b.polling_station_name}</td>
-                  <td className="py-3 px-4 font-mono text-emerald-700 font-semibold">{b.village_id}</td>
+                  <td className="py-3 px-4 font-mono text-emerald-700 font-semibold">{villages.find(v => v.village_id === b.village_id)?.village_name || b.village_id}</td>
                   <td className="py-3 px-4 text-slate-500">{b.location}</td>
                   <td className="py-3 px-4 font-bold text-slate-900">{b.voters_count?.toLocaleString()}</td>
                   <td className="py-3 px-4">
@@ -201,7 +201,7 @@ export const BoothManagement: React.FC<BoothManagementProps> = ({
                 >
                   {villages.map(v => (
                     <option key={v.village_id} value={v.village_id}>
-                      {v.village_name} ({v.village_id})
+                      {v.village_name}
                     </option>
                   ))}
                 </select>

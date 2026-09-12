@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, Plus, Calendar, User, Building, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { DevelopmentProject, User as UserType } from '../types.ts';
-import { api } from '../services/api.ts';
-import { Language, t } from '../translations.ts';
-
+import { getVillageName } from "../utils/villageName";import { TrendingUp, Plus, Calendar, User, Building, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { getVillageName } from "../utils/villageName";import { DevelopmentProject, User as UserType } from '../types.ts';
+import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
+import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
+import { getVillageName } from "../utils/villageName";
 interface DevelopmentProjectsProps {
   currentUser: UserType;
   lang: Language;
@@ -60,7 +60,7 @@ export const DevelopmentProjects: React.FC<DevelopmentProjectsProps> = ({ curren
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{t('development', lang)}</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {isVillageHead
-              ? `Public works and development projects in ${currentUser.village_id}`
+              ? `Public works and development projects in ${getVillageName(currentUser.village_id)}`
               : 'Tracking public works schemes and infrastructure progress across AC-58'}
           </p>
         </div>
@@ -104,7 +104,7 @@ export const DevelopmentProjects: React.FC<DevelopmentProjectsProps> = ({ curren
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 block">Village Jurisdiction</span>
-                    <span className="font-mono font-bold text-emerald-700">{p.village_id}</span>
+                    <span className="font-mono font-bold text-emerald-700">{getVillageName(p.village_id)}</span>
                   </div>
                 </div>
 
@@ -204,3 +204,5 @@ export const DevelopmentProjects: React.FC<DevelopmentProjectsProps> = ({ curren
     </div>
   );
 };
+
+

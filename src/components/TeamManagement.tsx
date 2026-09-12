@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, Phone, Mail, Shield, UserCheck, Lock } from 'lucide-react';
-import { User, Village } from '../types.ts';
-import { api } from '../services/api.ts';
-import { Language, t } from '../translations.ts';
-
+import { getVillageName } from "../utils/villageName";import { Users, Plus, Phone, Mail, Shield, UserCheck, Lock } from 'lucide-react';
+import { getVillageName } from "../utils/villageName";import { User, Village } from '../types.ts';
+import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
+import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
+import { getVillageName } from "../utils/villageName";
 interface TeamManagementProps {
   currentUser: User;
   villages: Village[];
@@ -83,7 +83,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {isVillageHead
-              ? `Village committee, booth convenors, and grassroot workers for ${currentUser.village_id}`
+              ? `Village committee, booth convenors, and grassroot workers for ${getVillageName(currentUser.village_id)}`
               : 'Constituency leadership, GP coordinators, and village cadres'}
           </p>
         </div>
@@ -227,7 +227,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
                   >
                     {villages.map(v => (
                       <option key={v.village_id} value={v.village_id}>
-                        {v.village_name} ({v.village_id})
+                        {v.village_name}
                       </option>
                     ))}
                   </select>
@@ -257,3 +257,4 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
     </div>
   );
 };
+

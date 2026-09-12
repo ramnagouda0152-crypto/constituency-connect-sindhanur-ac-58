@@ -3,6 +3,7 @@ import { ScrollText, Shield, User, Clock, Filter, AlertTriangle } from 'lucide-r
 import { AuditLog, User as UserType } from '../types.ts';
 import { api } from '../services/api.ts';
 import { Language, t } from '../translations.ts';
+import { OFFICIAL_VILLAGES_AC58 } from '../data/villagesList.ts';
 
 interface AuditLogViewProps {
   currentUser: UserType;
@@ -54,7 +55,7 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ currentUser, lang })
                 <th className="py-3 px-4">Actor / User</th>
                 <th className="py-3 px-4">Action</th>
                 <th className="py-3 px-4">Record Type & ID</th>
-                <th className="py-3 px-4">Village ID</th>
+                <th className="py-3 px-4">Village Name</th>
                 <th className="py-3 px-4">Changes / Remarks</th>
               </tr>
             </thead>
@@ -85,7 +86,7 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ currentUser, lang })
                       {log.record_type}: {log.record_id}
                     </td>
                     <td className="py-3 px-4 font-mono text-emerald-700 font-semibold">
-                      {log.village_id || 'Global'}
+                      {OFFICIAL_VILLAGES_AC58.find(v => v.village_id === log.village_id)?.village_name || 'Global'}
                     </td>
                     <td className="py-3 px-4 text-slate-500 max-w-xs truncate">
                       {log.changes ? JSON.stringify(log.changes) : '—'}
@@ -100,3 +101,4 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ currentUser, lang })
     </div>
   );
 };
+

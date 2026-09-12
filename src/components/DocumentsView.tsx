@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FileBox, Plus, FileText, Image, Download, ExternalLink, Shield } from 'lucide-react';
-import { VillageDocument, User as UserType, Village } from '../types.ts';
-import { api } from '../services/api.ts';
-import { Language, t } from '../translations.ts';
-
+import { getVillageName } from "../utils/villageName";import { FileBox, Plus, FileText, Image, Download, ExternalLink, Shield } from 'lucide-react';
+import { getVillageName } from "../utils/villageName";import { VillageDocument, User as UserType, Village } from '../types.ts';
+import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
+import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
+import { getVillageName } from "../utils/villageName";
 interface DocumentsViewProps {
   currentUser: UserType;
   villages: Village[];
@@ -86,7 +86,7 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ currentUser, villa
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{t('documents', lang)}</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {isVillageHead
-              ? `Repository of sanctioned works, photos, and records for ${currentUser.village_id}`
+              ? `Repository of sanctioned works, photos, and records for ${getVillageName(currentUser.village_id)}`
               : 'Constituency-wide documents, orders, and photographic proof repository'}
           </p>
         </div>
@@ -227,7 +227,7 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ currentUser, villa
                   >
                     {villages.map(v => (
                       <option key={v.village_id} value={v.village_id}>
-                        {v.village_name} ({v.village_id})
+                        {v.village_name}
                       </option>
                     ))}
                   </select>
@@ -268,3 +268,5 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ currentUser, villa
     </div>
   );
 };
+
+

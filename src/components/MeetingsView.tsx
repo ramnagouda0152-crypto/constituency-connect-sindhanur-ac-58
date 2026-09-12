@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
+import { getVillageName } from "../utils/villageName";import {
   Calendar,
   Clock,
   MapPin,
@@ -16,10 +16,10 @@ import {
   Lock
 } from 'lucide-react';
 import { VillageMeeting, VideoMeeting, User as UserType, Village } from '../types.ts';
-import { api } from '../services/api.ts';
-import { Language, t } from '../translations.ts';
-import { VideoConferenceModal } from './VideoConferenceModal.tsx';
-
+import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
+import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
+import { getVillageName } from "../utils/villageName";import { VideoConferenceModal } from './VideoConferenceModal.tsx';
+import { getVillageName } from "../utils/villageName";
 interface MeetingsViewProps {
   currentUser: UserType;
   villages: Village[];
@@ -151,7 +151,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{t('meetings', lang)}</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {isVillageHead
-              ? `Video conferences & Gram Sabhe meetings for ${currentUser.village_id}`
+              ? `Video conferences & Gram Sabhe meetings for ${getVillageName(currentUser.village_id)}`
               : 'Constituency civic meeting agendas, digital conferences, and assemblies'}
           </p>
         </div>
@@ -284,7 +284,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
                       </div>
 
                       <span className="font-mono text-emerald-700 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
-                        {vm.village_id}
+                        {getVillageName(vm.village_id)}
                       </span>
                     </div>
 
@@ -404,7 +404,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
                     <Users className="w-3.5 h-3.5 text-slate-400" />
                     <span>{m.attendees} community attendees</span>
                   </span>
-                  <span className="font-mono text-emerald-700 font-semibold">{m.village_id}</span>
+                  <span className="font-mono text-emerald-700 font-semibold">{getVillageName(m.village_id)}</span>
                 </div>
               </div>
             ))
@@ -615,7 +615,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
                   >
                     {villages.map(v => (
                       <option key={v.village_id} value={v.village_id}>
-                        {v.village_name} ({v.village_id})
+                        {v.village_name}
                       </option>
                     ))}
                   </select>
@@ -657,3 +657,4 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
     </div>
   );
 };
+

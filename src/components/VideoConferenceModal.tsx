@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
+import { getVillageName } from "../utils/villageName";import {
   Video,
   Mic,
   MicOff,
@@ -19,8 +19,8 @@ import {
   Clock
 } from 'lucide-react';
 import { VideoMeeting, VideoParticipant, User } from '../types.ts';
-import { api } from '../services/api.ts';
-
+import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
+import { getVillageName } from "../utils/villageName";
 interface VideoConferenceModalProps {
   meetingId: string;
   currentUser: User;
@@ -243,7 +243,7 @@ export const VideoConferenceModal: React.FC<VideoConferenceModalProps> = ({
               {meeting.title}
             </h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-400">
-              <span className="font-mono text-emerald-400 font-semibold">{meeting.village_id}</span>
+              <span className="font-mono text-emerald-400 font-semibold">{getVillageName(meeting.village_id)}</span>
               <span>•</span>
               <span>Host: Village Head</span>
             </div>
@@ -402,7 +402,7 @@ export const VideoConferenceModal: React.FC<VideoConferenceModalProps> = ({
                     <Users className="w-4 h-4 text-emerald-400" />
                     Village Attendees ({participants.length})
                   </h3>
-                  <span className="text-[11px] text-slate-400 font-mono">{meeting.village_id}</span>
+                  <span className="text-[11px] text-slate-400 font-mono">{getVillageName(meeting.village_id)}</span>
                 </div>
 
                 <div className="flex-1 overflow-y-auto divide-y divide-slate-800/60 p-2">
@@ -562,3 +562,4 @@ export const VideoConferenceModal: React.FC<VideoConferenceModalProps> = ({
     </div>
   );
 };
+

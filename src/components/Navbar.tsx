@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Search, Bell, Globe, Menu, X, Landmark, Check, AlertCircle, Calendar, Briefcase, FileText } from 'lucide-react';
-import { User, Notification } from '../types.ts';
-import { Language, t } from '../translations.ts';
-import { UserProfileMenu } from './UserProfileMenu.tsx';
-
+import { getVillageName } from "../utils/villageName";import { Search, Bell, Globe, Menu, X, Landmark, Check, AlertCircle, Calendar, Briefcase, FileText } from 'lucide-react';
+import { getVillageName } from "../utils/villageName";import { User, Notification } from '../types.ts';
+import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
+import { getVillageName } from "../utils/villageName";import { UserProfileMenu } from './UserProfileMenu.tsx';
+import { getVillageName } from "../utils/villageName";
 interface NavbarProps {
   currentUser: User;
   onSignOut: () => void;
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder={currentUser.role === 'VILLAGE_HEAD' ? `Search ${currentUser.village_id} records...` : t('search', lang)}
+                placeholder={currentUser.role === 'VILLAGE_HEAD' ? `Search ${getVillageName(currentUser.village_id)} records...` : t('search', lang)}
                 className="w-full bg-slate-50 hover:bg-slate-100 focus:bg-white text-slate-900 pl-9 pr-4 py-1.5 rounded-lg text-xs border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
               />
             </div>
@@ -128,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       {t('notifications', lang)} ({unreadCount} new)
                     </span>
                     <span className="text-[10px] text-slate-500">
-                      {currentUser.role === 'VILLAGE_HEAD' ? `Filtered to ${currentUser.village_id}` : 'Constituency wide'}
+                      {currentUser.role === 'VILLAGE_HEAD' ? `Filtered to ${getVillageName(currentUser.village_id)}` : 'Constituency wide'}
                     </span>
                   </div>
 
@@ -251,3 +251,4 @@ export const MobileNav: React.FC<{
     </nav>
   );
 };
+

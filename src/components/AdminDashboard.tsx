@@ -314,7 +314,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <table className="w-full text-left text-xs text-slate-600">
             <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
               <tr>
-                <th className="py-3 px-4">Village ID</th>
                 <th className="py-3 px-4">Village Name</th>
                 <th className="py-3 px-4">Gram Panchayat</th>
                 <th className="py-3 px-4">Voters</th>
@@ -328,7 +327,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 const villageIssues = issues.filter(i => i.village_id === v.village_id && i.status !== 'RESOLVED' && i.status !== 'CLOSED');
                 return (
                   <tr key={v.village_id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-4 font-mono font-medium text-slate-900">{v.village_id}</td>
                     <td className="py-3 px-4">
                       <div className="font-semibold text-slate-900">{v.village_name}</div>
                       <div className="text-[11px] text-slate-400">{v.kannada_name}</div>
