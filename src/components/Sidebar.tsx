@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   LayoutDashboard,
-  MapPin,
   Building2,
   Home,
   Vote,
@@ -51,7 +50,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   // Specific menu structures strictly as demanded in Section 9
   const adminMenuItems = [
     { id: 'dashboard', label: t('dashboard', lang), icon: LayoutDashboard },
-    { id: 'map', label: t('constituencyMap', lang), icon: MapPin },
     { id: 'gram-panchayats', label: t('gramPanchayats', lang), icon: Building2 },
     { id: 'villages', label: t('villages', lang), icon: Home },
     { id: 'booths', label: t('booths', lang), icon: Vote },
@@ -171,3 +169,5 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </aside>
   );
 };
+
+

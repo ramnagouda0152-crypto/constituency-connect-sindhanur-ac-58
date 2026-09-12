@@ -12,7 +12,6 @@ export const translations = {
     stateKarnataka: 'Karnataka',
     myVillage: 'My Village',
     dashboard: 'Dashboard',
-    constituencyMap: 'Constituency Map',
     gramPanchayats: 'Gram Panchayats',
     villages: 'Villages',
     booths: 'Booths & Polling Stations',
@@ -116,7 +115,6 @@ export const translations = {
     stateKarnataka: 'ಕರ್ನಾಟಕ',
     myVillage: 'ನನ್ನ ಗ್ರಾಮ',
     dashboard: 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
-    constituencyMap: 'ಕ್ಷೇತ್ರದ ನಕ್ಷೆ',
     gramPanchayats: 'ಗ್ರಾಮ ಪಂಚಾಯಿತಿಗಳು',
     villages: 'ಗ್ರಾಮಗಳು',
     booths: 'ಮತಗಟ್ಟೆಗಳು',
@@ -218,3 +216,4 @@ export const translations = {
 export function t(key: keyof typeof translations['en'], lang: Language = 'en'): string {
   return translations[lang]?.[key] || translations['en'][key] || key;
 }
+

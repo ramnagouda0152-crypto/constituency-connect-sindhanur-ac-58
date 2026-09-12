@@ -22,7 +22,6 @@ import { FieldVisits } from './components/FieldVisits.tsx';
 import { MeetingsView } from './components/MeetingsView.tsx';
 import { TaskManagement } from './components/TaskManagement.tsx';
 import { DocumentsView } from './components/DocumentsView.tsx';
-import { ConstituencyMap } from './components/ConstituencyMap.tsx';
 import { ReportsView } from './components/ReportsView.tsx';
 import { GramPanchayatView } from './components/GramPanchayatView.tsx';
 import { BoothManagement } from './components/BoothManagement.tsx';
@@ -386,8 +385,6 @@ export default function App() {
                   <AdminDashboard
                     stats={stats}
                     villages={villages}
-                    issues={issues}
-                    projects={projects}
                     lang={lang}
                     onNavigate={handleNavigate}
                     onOpenSecurityTests={() => setShowSecurityTests(true)}
@@ -402,8 +399,6 @@ export default function App() {
                   <VillageHeadDashboard
                     stats={stats}
                     village={userVillage}
-                    issues={issues}
-                    projects={projects}
                     meetings={meetings}
                     fieldVisits={fieldVisits}
                     lang={lang}
@@ -507,22 +502,10 @@ export default function App() {
                 />
               )}
 
-              {currentView === 'map' && (
-                <ConstituencyMap
-                  currentUser={currentUser}
-                  villages={villages}
-                  issues={issues}
-                  projects={projects}
-                  lang={lang}
-                />
-              )}
-
               {currentView === 'reports' && (
                 <ReportsView
                   currentUser={currentUser}
                   villages={villages}
-                  issues={issues}
-                  projects={projects}
                   lang={lang}
                 />
               )}
@@ -744,3 +727,4 @@ export default function App() {
     </div>
   );
 }
+
