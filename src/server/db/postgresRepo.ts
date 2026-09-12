@@ -2148,7 +2148,7 @@ export class PersistentRepository {
     return db.setupSuperAdmin({ ...params, password: params.password || 'SindhanurAC58@2025' });
   }
 
-  public async registerUser(params: { name: string; name_kannada?: string; mobile: string; email?: string; voter_id: string; dob?: string; gender?: string; address?: string; village_id: string; password?: string }): Promise<{ success: boolean; user?: ServerUser; error?: string }> {
+  public async registerUser(params: { name: string; name_kannada?: string; mobile: string; email?: string; voter_id: string; dob?: string; gender?: string; address?: string; village_id: string; password?: string; profile_photo?: string }): Promise<{ success: boolean; user?: ServerUser; error?: string }> {
     if (this.isPostgres) return this.pg.registerUser(params);
     this.checkEnvironment();
     return db.registerUser({
@@ -2611,5 +2611,6 @@ export class PersistentRepository {
 }
 
 export const repository = new PersistentRepository();
+
 
 
