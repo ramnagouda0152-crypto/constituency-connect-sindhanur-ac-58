@@ -3,6 +3,7 @@ import { TrendingUp, Plus, Calendar, User, Building, Clock, CheckCircle2, AlertT
 import { DevelopmentProject, User as UserType } from '../types.ts';
 import { api } from '../services/api.ts';
 import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName.ts';
 
 interface DevelopmentProjectsProps {
   currentUser: UserType;

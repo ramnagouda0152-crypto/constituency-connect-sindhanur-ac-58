@@ -3,6 +3,7 @@ import { FileBox, Plus, FileText, Image, Download, ExternalLink, Shield } from '
 import { VillageDocument, User as UserType, Village } from '../types.ts';
 import { api } from '../services/api.ts';
 import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName.ts';
 
 interface DocumentsViewProps {
   currentUser: UserType;

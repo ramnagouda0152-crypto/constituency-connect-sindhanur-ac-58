@@ -147,6 +147,7 @@ export class PostgresRepository {
     dob?: string;
     gender?: string;
     address?: string;
+    profile_photo?: string;
     village_id: string;
     password?: string;
   }): Promise<{ success: boolean; user?: ServerUser; error?: string }> {
@@ -2619,6 +2620,3 @@ export class PersistentRepository {
 }
 
 export const repository = new PersistentRepository();
-
-
-
