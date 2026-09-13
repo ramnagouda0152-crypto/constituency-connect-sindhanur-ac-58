@@ -384,6 +384,7 @@ export default function App() {
                 stats ? (
                   <AdminDashboard
                     stats={stats}
+                    issues={issues}
                     villages={villages}
                     lang={lang}
                     onNavigate={handleNavigate}
