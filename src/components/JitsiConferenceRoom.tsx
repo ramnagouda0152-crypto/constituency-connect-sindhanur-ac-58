@@ -77,6 +77,7 @@ export const JitsiConferenceRoom: React.FC<JitsiConferenceRoomProps> = ({
         const options = {
           roomName: jitsiRoomName,
           parentNode: containerRef.current,
+          allow: 'camera; microphone; display-capture; fullscreen;',
           width: '100%',
           height: '100%',
           userInfo: {
@@ -334,3 +335,4 @@ export const JitsiConferenceRoom: React.FC<JitsiConferenceRoomProps> = ({
     </div>
   );
 };
+
