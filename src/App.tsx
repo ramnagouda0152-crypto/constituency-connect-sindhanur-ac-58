@@ -399,6 +399,7 @@ export default function App() {
                 stats ? (
                   <VillageHeadDashboard
                     stats={stats}
+                    issues={issues}
                     village={userVillage}
                     meetings={meetings}
                     fieldVisits={fieldVisits}
@@ -730,4 +731,5 @@ export default function App() {
     </div>
   );
 }
+
 
