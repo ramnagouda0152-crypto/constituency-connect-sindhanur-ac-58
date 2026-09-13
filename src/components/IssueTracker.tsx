@@ -112,6 +112,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         category: newCat as any,
         priority: newPriority,
         village_id: targetVillage,
+        photos: newPhoto ? [newPhoto] : [],
       });
 
       setShowNewModal(false);
@@ -676,3 +677,4 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
+
