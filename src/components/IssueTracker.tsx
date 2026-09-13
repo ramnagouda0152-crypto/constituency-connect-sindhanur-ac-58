@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Issue, User as UserType, Village } from '../types.ts';
 import { api } from '../services/api.ts';
+import { getVillageName } from '../utils/villageName';
 import { Language, t } from '../translations.ts';
 
 interface IssueTrackerProps {
@@ -200,7 +201,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{t('issues', lang)}</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {isVillageHead
-              ? `Tracking civic and infrastructure issues for ${currentUser.village_id}`
+              ? `Tracking civic and infrastructure issues for ${getVillageName(currentUser.village_id)}`
               : 'Constituency-wide grievance and issue lifecycle management'}
           </p>
         </div>
@@ -297,7 +298,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 <option value="">All Villages in Sindhanur AC-58</option>
                 {villages.map(v => (
                   <option key={v.village_id} value={v.village_id}>
-                    {v.village_name} ({v.village_id})
+                    {v.village_name}
                   </option>
                 ))}
               </select>
@@ -308,7 +309,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
       {/* Issues List & Details View */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Left 2 Cols: Issue Cards */}
         <div className="lg:col-span-2 space-y-3">
           {loading ? (
@@ -345,7 +346,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                           {issue.priority}
                         </span>
                         <span className="text-[10px] text-slate-400">
-                          • Village: <strong className="text-slate-700">{issue.village_id}</strong>
+                          • Village: <strong className="text-slate-700">{getVillageName(issue.village_id)}</strong>
                         </span>
                       </div>
 
@@ -416,7 +417,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               <div className="bg-slate-50 rounded-xl p-3 text-xs space-y-1.5 text-slate-600">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Village ID:</span>
-                  <span className="font-mono font-bold text-slate-800">{selectedIssue.village_id}</span>
+                  <span className="font-mono font-bold text-slate-800">{getVillageName(selectedIssue.village_id)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Category:</span>
@@ -601,7 +602,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   <input
                     type="text"
                     disabled
-                    value={`${currentUser.village_id} (Your Assigned Jurisdiction)`}
+                    value={`${getVillageName(currentUser.village_id)} (Your Assigned Jurisdiction)`}
                     className="w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-100 text-slate-600 font-mono"
                   />
                 ) : (
@@ -612,7 +613,7 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   >
                     {villages.map(v => (
                       <option key={v.village_id} value={v.village_id}>
-                        {v.village_name} ({v.village_id})
+                        {v.village_name}
                       </option>
                     ))}
                   </select>
@@ -675,14 +676,3 @@ const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
-

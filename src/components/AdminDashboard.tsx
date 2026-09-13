@@ -102,7 +102,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* 8 Metric Cards specified in Section 8 */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Villages */}
-        <div 
+        <div
           onClick={() => onNavigate('villages')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -117,7 +117,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Total GPs */}
-        <div 
+        <div
           onClick={() => onNavigate('gram-panchayats')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -132,7 +132,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Total Booths */}
-        <div 
+        <div
           onClick={() => onNavigate('booths')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -147,7 +147,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Total Team Members */}
-        <div 
+        <div
           onClick={() => onNavigate('team')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -162,7 +162,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Total Issues */}
-        <div 
+        <div
           onClick={() => onNavigate('issues')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -177,7 +177,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Pending Issues */}
-        <div 
+        <div
           onClick={() => onNavigate('issues')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -192,7 +192,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Resolved Issues */}
-        <div 
+        <div
           onClick={() => onNavigate('issues')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -207,7 +207,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Development Projects */}
-        <div 
+        <div
           onClick={() => onNavigate('development')}
           className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer group"
         >
@@ -224,7 +224,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Analytics Grid: Issues by Category + Status Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Issues by Category Bar Chart */}
         <div className="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
           <div className="flex items-center justify-between mb-4">
@@ -259,7 +259,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div>
             <h3 className="text-sm font-bold text-slate-900">Resolution Progress</h3>
             <p className="text-xs text-slate-500">Issue lifecycle resolution rate</p>
-            
+
             <div className="h-44 w-full mt-2 flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -314,6 +314,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <table className="w-full text-left text-xs text-slate-600">
             <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
               <tr>
+
                 <th className="py-3 px-4">Village Name</th>
                 <th className="py-3 px-4">Gram Panchayat</th>
                 <th className="py-3 px-4">Voters</th>
@@ -327,6 +328,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 const villageIssues = issues.filter(i => i.village_id === v.village_id && i.status !== 'RESOLVED' && i.status !== 'CLOSED');
                 return (
                   <tr key={v.village_id} className="hover:bg-slate-50/80 transition-colors">
+
                     <td className="py-3 px-4">
                       <div className="font-semibold text-slate-900">{v.village_name}</div>
                       <div className="text-[11px] text-slate-400">{v.kannada_name}</div>

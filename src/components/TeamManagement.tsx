@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import { Users, Plus, Phone, Mail, Shield, UserCheck, Lock } from 'lucide-react';
-import { getVillageName } from "../utils/villageName";import { User, Village } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";
+import { Users, Plus, Phone, Mail, Shield, UserCheck, Lock } from 'lucide-react';
+import { User, Village } from '../types.ts';
+import { api } from '../services/api.ts';
+import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName';
+
 interface TeamManagementProps {
   currentUser: User;
   villages: Village[];
@@ -142,7 +143,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="text-slate-400 text-[11px]">Jurisdiction</span>
                 <span className="font-mono font-bold text-emerald-700">
-                  {m.village_id || 'All Constituency'}
+                  {getVillageName(m.village_id)}
                 </span>
               </div>
             </div>
@@ -257,4 +258,3 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({
     </div>
   );
 };
-

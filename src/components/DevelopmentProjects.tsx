@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import { TrendingUp, Plus, Calendar, User, Building, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { getVillageName } from "../utils/villageName";import { DevelopmentProject, User as UserType } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";
+import { TrendingUp, Plus, Calendar, User, Building, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { DevelopmentProject, User as UserType } from '../types.ts';
+import { api } from '../services/api.ts';
+import { Language, t } from '../translations.ts';
+
 interface DevelopmentProjectsProps {
   currentUser: UserType;
   lang: Language;
@@ -204,5 +204,3 @@ export const DevelopmentProjects: React.FC<DevelopmentProjectsProps> = ({ curren
     </div>
   );
 };
-
-

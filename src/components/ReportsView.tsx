@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FileText, Download, Printer, CheckCircle2, TrendingUp, AlertCircle, Home, Users } from 'lucide-react';
 import { User, Village, Issue, DevelopmentProject } from '../types.ts';
 import { api } from '../services/api.ts';
+import { getVillageName } from '../utils/villageName';
 import { Language, t } from '../translations.ts';
 
 interface ReportsViewProps {
@@ -143,7 +144,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
       {/* Printable Report Canvas */}
       <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-xs print:border-none print:shadow-none print:p-0 space-y-6">
-        
+
         {/* Document Header */}
         <div className="border-b-2 border-slate-900 pb-4 text-center">
           <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
@@ -195,7 +196,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                 <tbody>
                   {villages.map(v => (
                     <tr key={v.village_id} className="border-b">
-                      <td className="p-2 border font-mono">{v.village_id}</td>
+                      <td className="p-2 border font-mono">{v.village_name}</td>
                       <td className="p-2 border font-medium">{v.village_name} ({v.kannada_name})</td>
                       <td className="p-2 border">{v.gp_id}</td>
                       <td className="p-2 border">{v.voter_count?.toLocaleString() || '—'}</td>
@@ -213,7 +214,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
             <div className="flex justify-between items-center bg-slate-50 p-4 rounded-xl">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">{targetVillage.village_name} ({targetVillage.kannada_name})</h3>
-                <p className="text-xs text-slate-500 font-mono">ID: {targetVillage.village_id} • GP: {targetVillage.gp_id}</p>
+                <p className="text-xs text-slate-500 font-mono">Village: {targetVillage.village_name} • GP: {targetVillage.gp_id}</p>
               </div>
               <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold rounded text-xs">
                 {targetVillage.status}
@@ -285,7 +286,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                     <td className="p-2 border font-mono">{i.issue_id}</td>
                     <td className="p-2 border font-medium">{i.title}</td>
                     <td className="p-2 border">{i.category}</td>
-                    <td className="p-2 border font-mono">{i.village_id}</td>
+                    <td className="p-2 border font-mono">{getVillageName(i.village_id)}</td>
                     <td className="p-2 border">{i.priority}</td>
                     <td className="p-2 border font-bold">{i.status}</td>
                   </tr>

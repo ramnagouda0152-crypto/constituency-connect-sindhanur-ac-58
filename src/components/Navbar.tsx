@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { getVillageName } from "../utils/villageName";import { Search, Bell, Globe, Menu, X, Landmark, Check, AlertCircle, Calendar, Briefcase, FileText } from 'lucide-react';
-import { getVillageName } from "../utils/villageName";import { User, Notification } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";import { UserProfileMenu } from './UserProfileMenu.tsx';
-import { getVillageName } from "../utils/villageName";
+import { Search, Bell, Globe, Menu, X, Landmark, Check, AlertCircle, Calendar, Briefcase, FileText } from 'lucide-react';
+import { User, Notification } from '../types.ts';
+import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName';
+import { UserProfileMenu } from './UserProfileMenu.tsx';
+
 interface NavbarProps {
   currentUser: User;
   onSignOut: () => void;
@@ -45,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-          
+
           {/* Logo & Assembly Constituency Title */}
           <div className="flex items-center gap-3">
             <button
@@ -95,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action Icons & Persona Switcher */}
           <div className="flex items-center gap-2 sm:gap-3">
-            
+
             {/* Language Switcher Button */}
             <button
               onClick={onToggleLang}
@@ -251,4 +252,3 @@ export const MobileNav: React.FC<{
     </nav>
   );
 };
-

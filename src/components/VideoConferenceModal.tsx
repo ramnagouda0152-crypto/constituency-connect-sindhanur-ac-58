@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import {
+import {
   Video,
   Mic,
   MicOff,
@@ -19,8 +19,9 @@ import { getVillageName } from "../utils/villageName";import {
   Clock
 } from 'lucide-react';
 import { VideoMeeting, VideoParticipant, User } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";
+import { api } from '../services/api.ts';
+import { getVillageName } from '../utils/villageName';
+
 interface VideoConferenceModalProps {
   meetingId: string;
   currentUser: User;
@@ -562,4 +563,3 @@ export const VideoConferenceModal: React.FC<VideoConferenceModalProps> = ({
     </div>
   );
 };
-

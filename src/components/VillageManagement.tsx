@@ -22,9 +22,9 @@ import {
 } from 'lucide-react';
 import { Village, User, Booth, Issue, DevelopmentProject, VillageMeeting, FieldVisit, VillageDocument, GramPanchayat } from '../types.ts';
 import { api } from '../services/api.ts';
+import { getVillageName } from '../utils/villageName';
 import { Language, t } from '../translations.ts';
 import { AccessDeniedScreen, LoadingState } from './ErrorStates.tsx';
-
 interface VillageManagementProps {
   currentUser: User;
   selectedVillageId?: string | null;
@@ -32,7 +32,6 @@ interface VillageManagementProps {
   onNavigate: (view: string) => void;
   onSelectVillage: (id: string | null) => void;
 }
-
 export const VillageManagement: React.FC<VillageManagementProps> = ({
   currentUser,
   selectedVillageId,
@@ -49,7 +48,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
   >('Overview');
   const [searchQuery, setSearchQuery] = useState('');
   const [accessDeniedError, setAccessDeniedError] = useState<any | null>(null);
-
   // Add Village Modal State (Admin only)
   const [showAddModal, setShowAddModal] = useState(false);
   const [newVillageName, setNewVillageName] = useState('');
@@ -59,13 +57,10 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
   const [newLng, setNewLng] = useState('76.7120');
   const [newPop, setNewPop] = useState('2500');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const isAdmin = currentUser.role === 'SUPER_ADMIN';
-
   useEffect(() => {
     loadVillages();
   }, [currentUser]);
-
   useEffect(() => {
     if (selectedVillageId) {
       loadVillageProfile(selectedVillageId);
@@ -74,7 +69,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       setAccessDeniedError(null);
     }
   }, [selectedVillageId, currentUser]);
-
   const loadVillages = async () => {
     setLoading(true);
     try {
@@ -86,7 +80,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       setLoading(false);
     }
   };
-
   const loadVillageProfile = async (id: string) => {
     setProfileLoading(true);
     setAccessDeniedError(null);
@@ -105,7 +98,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       setProfileLoading(false);
     }
   };
-
   const handleCreateVillage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newVillageName || !newGpId) return;
@@ -129,7 +121,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       setIsSubmitting(false);
     }
   };
-
   // If 403 Access Denied occurred when trying to open a village
   if (accessDeniedError) {
     return (
@@ -145,16 +136,13 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       />
     );
   }
-
   // Profile View
   if (selectedVillageId && (profileData || profileLoading)) {
     if (profileLoading) {
       return <LoadingState lang={lang} label="Loading Village Profile..." />;
     }
-
     const v: Village = profileData.village;
     const gp: GramPanchayat | undefined = profileData.gp;
-
     return (
       <div className="space-y-6">
         {/* Profile Header */}
@@ -172,7 +160,7 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                 <div className="flex items-center gap-2">
                   <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{v.village_name}</h1>
                   <span className="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-semibold">
-                    {v.village_id}
+                    {v.village_name}
                   </span>
                 </div>
                 <p className="text-sm text-slate-500 font-medium">{v.kannada_name}</p>
@@ -185,14 +173,12 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                 </div>
               </div>
             </div>
-
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-bold">
                 {v.status}
               </span>
             </div>
           </div>
-
           {/* Required 9 Tabs: Overview, Team, Booths, Issues, Development, Meetings, Field Visits, Documents, Reports */}
           <div className="flex items-center gap-1 mt-6 border-b border-slate-200 overflow-x-auto pb-0">
             {[
@@ -220,7 +206,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             ))}
           </div>
         </div>
-
         {/* Tab Contents */}
         {activeTab === 'Overview' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -253,7 +238,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                 </div>
               </div>
             </div>
-
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-3">
               <h3 className="text-sm font-bold text-slate-900">Village Team</h3>
               <div className="space-y-2">
@@ -270,7 +254,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Team' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Assigned Village Team</h3>
@@ -288,7 +271,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Booths' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Polling Booths in {v.village_name}</h3>
@@ -306,7 +288,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Issues' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Civic Issues in {v.village_name}</h3>
@@ -326,7 +307,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Development' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Development Projects in {v.village_name}</h3>
@@ -348,7 +328,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Meetings' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Village Meetings</h3>
@@ -366,7 +345,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Field Visits' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Field Inspections</h3>
@@ -384,7 +362,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Documents' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
             <h3 className="text-sm font-bold text-slate-900 mb-4">Village Photos & Records</h3>
@@ -406,7 +383,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
             </div>
           </div>
         )}
-
         {activeTab === 'Reports' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
             <h3 className="text-sm font-bold text-slate-900">Village Consolidated Report</h3>
@@ -424,14 +400,12 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
       </div>
     );
   }
-
   // Village List View
   const filteredVillages = villages.filter(v =>
     v.village_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     v.kannada_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     v.village_id.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -440,11 +414,10 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{t('villages', lang)}</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             {currentUser.role === 'VILLAGE_HEAD'
-              ? `Authorized Village Jurisdiction: ${currentUser.village_id}`
+              ? `Authorized Village Jurisdiction: ${getVillageName(currentUser.village_id)}`
               : 'Managing constituent revenue villages across Sindhanur AC-58'}
           </p>
         </div>
-
         {isAdmin && (
           <button
             onClick={() => setShowAddModal(true)}
@@ -455,7 +428,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
           </button>
         )}
       </div>
-
       {/* Search Bar */}
       <div className="relative max-w-md">
         <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -467,7 +439,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
           className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-xs"
         />
       </div>
-
       {/* Village Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredVillages.map(v => (
@@ -478,7 +449,7 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-semibold text-slate-500">{v.village_id}</span>
+                <span className="font-mono text-xs font-semibold text-slate-500">{v.village_name}</span>
                 <span className="text-[10px] font-bold px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
                   {v.status}
                 </span>
@@ -487,7 +458,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                 {v.village_name}
               </h3>
               <p className="text-xs text-slate-500 font-medium mb-3">{v.kannada_name}</p>
-
               <div className="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Gram Panchayat:</span>
@@ -503,7 +473,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                 </div>
               </div>
             </div>
-
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-700">
               <span>View Village Profile</span>
               <span>→</span>
@@ -511,14 +480,12 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
           </div>
         ))}
       </div>
-
       {/* Add Village Modal (Admin Only) */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95">
             <h3 className="text-lg font-bold text-slate-900 mb-1">Add Constituent Village</h3>
             <p className="text-xs text-slate-500 mb-4">Register new revenue village under Sindhanur AC-58 hierarchy</p>
-
             <form onSubmit={handleCreateVillage} className="space-y-3.5 text-xs">
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Village Name (English)</label>
@@ -531,7 +498,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500"
                 />
               </div>
-
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Kannada Name (ಕನ್ನಡ ಹೆಸರು)</label>
                 <input
@@ -542,7 +508,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500"
                 />
               </div>
-
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Gram Panchayat</label>
                 <select
@@ -557,7 +522,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                   <option value="GP_BAD">Badarli Gram Panchayat</option>
                 </select>
               </div>
-
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-slate-700 mb-1">Latitude</label>
@@ -578,7 +542,6 @@ export const VillageManagement: React.FC<VillageManagementProps> = ({
                   />
                 </div>
               </div>
-
               <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100">
                 <button
                   type="button"

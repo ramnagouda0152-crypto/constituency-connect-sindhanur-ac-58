@@ -83,7 +83,7 @@ export const GramPanchayatView: React.FC<GramPanchayatViewProps> = ({
                 className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs hover:border-emerald-500/60 transition-all cursor-pointer group"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-mono text-[11px] text-slate-400">{v.village_id}</span>
+                  <span className="font-mono text-[11px] text-slate-400">{v.village_name}</span>
                   <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-1.5 py-0.2 rounded">
                     {v.status}
                   </span>

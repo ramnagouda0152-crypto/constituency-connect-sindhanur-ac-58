@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import { CheckSquare, Plus, Calendar, Clock, User, AlertCircle, TrendingUp, CheckCircle2 } from 'lucide-react';
-import { getVillageName } from "../utils/villageName";import { Task, User as UserType, Village } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";
+import { CheckSquare, Plus, Calendar, Clock, User, AlertCircle, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Task, User as UserType, Village } from '../types.ts';
+import { api } from '../services/api.ts';
+import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName';
+
 interface TaskManagementProps {
   currentUser: UserType;
   villages: Village[];
@@ -282,4 +283,3 @@ export const TaskManagement: React.FC<TaskManagementProps> = ({ currentUser, vil
     </div>
   );
 };
-

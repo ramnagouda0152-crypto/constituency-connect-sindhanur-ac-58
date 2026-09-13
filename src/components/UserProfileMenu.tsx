@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getVillageName } from "../utils/villageName";import {
+import {
   User as UserIcon,
   Shield,
   ChevronDown,
@@ -12,8 +12,9 @@ import { getVillageName } from "../utils/villageName";import {
   ShieldCheck
 } from 'lucide-react';
 import { User } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";
+import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName';
+
 interface UserProfileMenuProps {
   currentUser: User;
   onSignOut: () => void;
@@ -95,7 +96,7 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
                 <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                 <div className="truncate">
                   <span className="font-semibold text-slate-800">Village: </span>
-                  {currentUser.village_id}
+                  {getVillageName(currentUser.village_id)}
                 </div>
               </div>
             )}
@@ -143,4 +144,3 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
     </div>
   );
 };
-

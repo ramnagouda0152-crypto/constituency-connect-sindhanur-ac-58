@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import { FileBox, Plus, FileText, Image, Download, ExternalLink, Shield } from 'lucide-react';
-import { getVillageName } from "../utils/villageName";import { VillageDocument, User as UserType, Village } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";
+import { FileBox, Plus, FileText, Image, Download, ExternalLink, Shield } from 'lucide-react';
+import { VillageDocument, User as UserType, Village } from '../types.ts';
+import { api } from '../services/api.ts';
+import { Language, t } from '../translations.ts';
+
 interface DocumentsViewProps {
   currentUser: UserType;
   villages: Village[];
@@ -155,7 +155,7 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ currentUser, villa
                       {doc.category}
                     </span>
                     <span className="text-[10px] font-mono text-emerald-700 font-semibold">
-                      {doc.village_id}
+                      {getVillageName(doc.village_id)}
                     </span>
                   </div>
 
@@ -268,5 +268,3 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ currentUser, villa
     </div>
   );
 };
-
-

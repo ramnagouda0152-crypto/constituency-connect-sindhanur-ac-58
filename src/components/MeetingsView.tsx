@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getVillageName } from "../utils/villageName";import {
+import {
   Calendar,
   Clock,
   MapPin,
@@ -16,10 +16,11 @@ import { getVillageName } from "../utils/villageName";import {
   Lock
 } from 'lucide-react';
 import { VillageMeeting, VideoMeeting, User as UserType, Village } from '../types.ts';
-import { getVillageName } from "../utils/villageName";import { api } from '../services/api.ts';
-import { getVillageName } from "../utils/villageName";import { Language, t } from '../translations.ts';
-import { getVillageName } from "../utils/villageName";import { VideoConferenceModal } from './VideoConferenceModal.tsx';
-import { getVillageName } from "../utils/villageName";
+import { api } from '../services/api.ts';
+import { Language, t } from '../translations.ts';
+import { getVillageName } from '../utils/villageName';
+import { VideoConferenceModal } from './VideoConferenceModal.tsx';
+
 interface MeetingsViewProps {
   currentUser: UserType;
   villages: Village[];
@@ -441,7 +442,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
                 <h3 className="text-base font-bold text-slate-900">Initiate Village Video Conference</h3>
               </div>
               <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-mono text-xs font-bold">
-                {currentUser.village_id}
+                {getVillageName(currentUser.village_id)}
               </span>
             </div>
 
@@ -522,7 +523,7 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
               <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600">
                 <span className="font-semibold text-slate-900 block mb-0.5">Jurisdiction Lock:</span>
                 This conference will be assigned exclusively to your village (
-                <span className="font-mono font-bold text-emerald-700">{currentUser.village_id}</span>
+                <span className="font-mono font-bold text-emerald-700">{getVillageName(currentUser.village_id)}</span>
                 ). Super Admin and other village heads cannot alter or commandeer this conference.
               </div>
 
@@ -657,4 +658,3 @@ export const MeetingsView: React.FC<MeetingsViewProps> = ({ currentUser, village
     </div>
   );
 };
-
