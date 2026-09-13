@@ -3,6 +3,7 @@ import { ScrollText, Shield, User, Clock, Filter, AlertTriangle } from 'lucide-r
 import { AuditLog, User as UserType } from '../types.ts';
 import { api } from '../services/api.ts';
 import { Language, t } from '../translations.ts';
+import { OFFICIAL_VILLAGES_AC58 } from '../data/villagesList.ts';
 
 interface AuditLogViewProps {
   currentUser: UserType;
