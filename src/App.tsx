@@ -385,6 +385,7 @@ export default function App() {
                   <AdminDashboard
                     stats={stats}
                     issues={issues}
+                      projects={projects}
                     villages={villages}
                     lang={lang}
                     onNavigate={handleNavigate}
@@ -400,6 +401,7 @@ export default function App() {
                   <VillageHeadDashboard
                     stats={stats}
                     issues={issues}
+                      projects={projects}
                     village={userVillage}
                     meetings={meetings}
                     fieldVisits={fieldVisits}
@@ -509,7 +511,7 @@ export default function App() {
                   currentUser={currentUser}
                   villages={villages}
                   issues={issues}
-                  projects={projects}
+                      projects={projects}
                   lang={lang}
                 />
               )}
@@ -731,5 +733,4 @@ export default function App() {
     </div>
   );
 }
-
 
