@@ -278,6 +278,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                   <th className="p-2 border">Village</th>
                   <th className="p-2 border">Priority</th>
                   <th className="p-2 border">Status</th>
+                  <th className="p-2 border">Photo</th>
                 </tr>
               </thead>
               <tbody>
@@ -289,6 +290,13 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
                     <td className="p-2 border font-mono">{getVillageName(i.village_id)}</td>
                     <td className="p-2 border">{i.priority}</td>
                     <td className="p-2 border font-bold">{i.status}</td>
+                    <td className="p-2 border">
+                      {i.photos?.length > 0 ? (
+                        <img src={i.photos[0]} alt="Issue" className="w-16 h-16 object-cover rounded-lg border" />
+                      ) : (
+                        <span className="text-slate-400">No photo</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -330,3 +338,6 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     </div>
   );
 };
+
+
+
