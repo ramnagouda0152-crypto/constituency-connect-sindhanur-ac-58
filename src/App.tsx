@@ -507,6 +507,8 @@ export default function App() {
                 <ReportsView
                   currentUser={currentUser}
                   villages={villages}
+                  issues={issues}
+                  projects={projects}
                   lang={lang}
                 />
               )}
