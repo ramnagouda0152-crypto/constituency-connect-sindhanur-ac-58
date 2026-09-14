@@ -187,12 +187,12 @@ export class PostgresRepository {
            user_id, name, name_kannada, mobile, email, voter_id, role, status,
            village_id, gp_id, taluk_id, constituency_id, password_hash, password_salt,
            dob, gender, address, profile_photo, created_at, updated_at
-         ) VALUES ($1, $2, $3, $4, $5, $6, 'MEMBER', 'PENDING', $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+         ) VALUES ($1, $2, $3, $4, $5, $6, 'MEMBER', 'PENDING', $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
          RETURNING *`,
         [
           userId, params.name, params.name_kannada || null, params.mobile, params.email || null,
           params.voter_id.toUpperCase().trim(), village.village_id, village.gp_id, village.taluk_id,
-          village.constituency_id, hash, salt, params.dob || null, params.gender || null, params.address || null, params.profile_photo || null, now
+          village.constituency_id, hash, salt, params.dob || null, params.gender || null, params.address || null, params.profile_photo || null, now, now
         ]
       );
 
