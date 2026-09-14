@@ -1,6 +1,5 @@
-import app from '../src/server/app.ts';
+﻿import app from '../src/server/app.ts';
 import { getPostgresPool } from '../src/server/db/postgresPool.ts';
-import { migrateDataToPostgres } from '../src/server/db/migrate.ts';
 
 let migrationPromise: Promise<any> | null = null;
 
@@ -11,14 +10,17 @@ async function ensureDatabaseInitialized() {
 
   if (!migrationPromise) {
     migrationPromise = (async () => {
-      const result = await pool.query('SELECT COUNT(*)::int AS count FROM villages');
+      await pool.query(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS profile_photo TEXT
+      `);
 
-      if (result.rows[0].count < 100) {
-        console.log('[Vercel] Database has fewer than 100 villages. Running migration...');
-        return migrateDataToPostgres();
-      }
+      console.log('[Vercel] Verified users.profile_photo column.');
 
-      return { migrated: false, message: `Database already contains ${result.rows[0].count} villages.` };
+      return {
+        migrated: true,
+        message: 'Production database schema verified.'
+      };
     })().catch((err) => {
       migrationPromise = null;
       console.error('[Vercel] Database initialization failed:', err);
