@@ -103,7 +103,7 @@ function isOriginAllowed(origin: string | undefined, host: string | undefined): 
 }
 
 // Standard middleware
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // CORS configuration adhering to strict origin isolation and automatic preview detection
 app.use((req, res, next) => {
