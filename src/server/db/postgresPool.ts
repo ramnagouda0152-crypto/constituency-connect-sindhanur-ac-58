@@ -103,6 +103,7 @@ export async function initializeSchema(): Promise<void> {
   if (fs.existsSync(schemaPath)) {
     const ddl = fs.readFileSync(schemaPath, 'utf-8');
     await p.query(ddl);
+    await p.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_photo TEXT');
     console.log('[PostgreSQL] Production schema initialized successfully.');
   }
 }
