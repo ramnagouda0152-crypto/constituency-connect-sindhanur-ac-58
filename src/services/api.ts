@@ -617,6 +617,11 @@ class ApiClient {
     });
   }
 
+  public async deleteConference(id: string): Promise<{ success: boolean; message: string }> {
+    return this.request(`/api/conferences/${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+  }
   // Announcements
   public async getAnnouncements(): Promise<Announcement[]> {
     return this.request('/api/announcements');
@@ -638,6 +643,4 @@ class ApiClient {
 }
 
 export const api = new ApiClient();
-
-
 

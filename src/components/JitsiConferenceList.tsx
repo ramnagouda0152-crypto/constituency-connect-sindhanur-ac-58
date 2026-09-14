@@ -183,6 +183,20 @@ export const JitsiConferenceList: React.FC<JitsiConferenceListProps> = ({
     }
   };
 
+  const handleDeleteConference = async (conference: Conference) => {
+    const confirmed = window.confirm(
+      `Permanently delete "${conference.title}" from conference history? This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    setError(null);
+    try {
+      await api.deleteConference(conference.id);
+      await loadConferences();
+    } catch (err: any) {
+      setError(err.message || 'Failed to delete conference history.');
+    }
+  };
   const filteredConferences = conferences.filter(c => {
     if (activeTab === 'LIVE') return c.status === 'Live';
     if (activeTab === 'SCHEDULED') return c.status === 'Scheduled';
@@ -444,6 +458,15 @@ export const JitsiConferenceList: React.FC<JitsiConferenceListProps> = ({
                     >
                       <Video className="w-3.5 h-3.5" />
                       <span>Join Conference</span>
+                    </button>
+                  ) : isSuperAdmin ? (
+                    <button
+                      id={`delete-conference-${conf.id}`}
+                      onClick={() => handleDeleteConference(conf)}
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 hover:bg-red-700 text-white shadow-xs transition"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Delete History</span>
                     </button>
                   ) : (
                     <span className="px-3 py-1.5 bg-slate-100 text-slate-400 rounded-xl text-xs font-medium">

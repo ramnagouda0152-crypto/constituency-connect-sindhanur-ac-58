@@ -1820,9 +1820,46 @@ class ConstituencyDatabase {
     const { jitsi_room_name, ...safeConf } = conf;
     return safeConf;
   }
+
+  public deleteConference(conferenceId: string, user: User): void {
+    if (user.role !== 'SUPER_ADMIN') {
+      throw new Error('Forbidden: Only Super Admins can delete conference history.');
+    }
+
+    const conferences = this.data.conferences || [];
+    const confIndex = conferences.findIndex(c => c.id === conferenceId);
+
+    if (confIndex === -1) {
+      throw new Error('Conference not found.');
+    }
+
+    const conf = conferences[confIndex];
+
+    if (conf.status !== 'Ended') {
+      throw new Error('Only ended conferences can be deleted from history.');
+    }
+
+    this.logAudit({
+      user_id: user.user_id,
+      user_name: user.name,
+      role: user.role,
+      action: 'DELETE',
+      record_type: 'CONFERENCE',
+      record_id: conferenceId,
+      village_id: conf.village_id,
+      details: `Super Admin (${user.name}) permanently deleted ended video conference '${conf.title}' from history.`
+    });
+
+    this.data.conferences.splice(confIndex, 1);
+
+    if (this.data.conference_participants) {
+      this.data.conference_participants = this.data.conference_participants.filter(
+        p => p.conference_id !== conferenceId
+      );
+    }
+
+    this.saveData();
+  }
 }
-
 export const db = new ConstituencyDatabase();
-
-
 

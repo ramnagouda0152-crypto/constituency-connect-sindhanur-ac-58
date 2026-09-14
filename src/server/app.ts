@@ -1734,6 +1734,24 @@ app.get('/api/public/villages', async (_req, res) => {
     }
   });
 
+  // Delete ended conference history: Super Admin ONLY
+  app.delete('/api/conferences/:id', authenticateUser, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { id } = req.params;
+      const user = req.user!;
+
+      if (user.role !== 'SUPER_ADMIN') {
+        res.status(403).json({ error: 'Permission Denied: Only Super Admins can delete conference history.' });
+        return;
+      }
+
+      await repository.deleteConference(id, user);
+      res.json({ success: true, message: 'Conference history deleted successfully.' });
+    } catch (err: any) {
+      console.error('Delete conference error:', err);
+      res.status(400).json({ error: err.message || 'Unable to delete conference history.' });
+    }
+  });
   // -------------------------------------------------------------
   // ANNOUNCEMENTS
   // -------------------------------------------------------------

@@ -1696,6 +1696,53 @@ export class PostgresRepository {
     });
   }
 
+
+  public async deleteConference(conferenceId: string, user: User): Promise<void> {
+    if (user.role !== 'SUPER_ADMIN') {
+      throw new Error('Forbidden: Only Super Admins can delete conference history.');
+    }
+
+    await withTransaction(async (client) => {
+      const confRes = await client.query(
+        'SELECT * FROM conferences WHERE id = $1 FOR UPDATE',
+        [conferenceId]
+      );
+
+      if (confRes.rows.length === 0) {
+        throw new Error('Conference not found.');
+      }
+
+      const conf = confRes.rows[0];
+
+      if (conf.status !== 'Ended') {
+        throw new Error('Only ended conferences can be deleted from history.');
+      }
+
+      const now = new Date().toISOString();
+      const auditId = generateSecureId('AUD');
+
+      await client.query(`
+        INSERT INTO audit_logs
+          (audit_id, user_id, user_name, role, action, record_type, record_id, village_id, details, timestamp)
+        VALUES
+          ($1, $2, $3, $4, 'DELETE', 'CONFERENCE', $5, $6, $7, $8)
+      `, [
+        auditId,
+        user.user_id,
+        user.name,
+        user.role,
+        conferenceId,
+        conf.village_id,
+        `Super Admin (${user.name}) permanently deleted ended video conference '${conf.title}' from history.`,
+        now
+      ]);
+
+      await client.query(
+        'DELETE FROM conferences WHERE id = $1',
+        [conferenceId]
+      );
+    });
+  }
   // --- Tasks ---
   public async getTasks(allowedVillageIds?: string[] | null): Promise<Task[]> {
     let sql = 'SELECT * FROM tasks';
@@ -2537,6 +2584,12 @@ export class PersistentRepository {
     return db.endConference(conferenceId, user);
   }
 
+
+  public async deleteConference(conferenceId: string, user: User): Promise<void> {
+    if (this.isPostgres) return this.pg.deleteConference(conferenceId, user);
+    this.checkEnvironment();
+    return db.deleteConference(conferenceId, user);
+  }
   // --- Tasks ---
   public async getTasks(allowedVillageIds?: string[] | null): Promise<Task[]> {
     if (this.isPostgres) return this.pg.getTasks(allowedVillageIds);
